@@ -5,12 +5,12 @@ class Matrix():
     def get_row_echelon_form(self, A):
         """Returns a row-echelon form of matrix A"""
         for i in range(min(len(A), len(A[0]))):
-            for r in range(i, len(A)):       # for each row
-                zero_row = A[r][i] == 0
+            for j in range(i, len(A)):       # for each row
+                zero_row = A[j][i] == 0
                 if zero_row:
                     continue
                 # swap current row with first row
-                A[i], A[r] = A[r], A[i]
+                A[i], A[j] = A[j], A[i]
                 # reduce the matrix by looking at each column
                 first_row_first_col = A[i][i]
 
