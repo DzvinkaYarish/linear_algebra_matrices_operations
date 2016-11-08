@@ -38,7 +38,7 @@ class Matrix():
 
     def get_PLU(self):
         L = np.matrix([[0.0 for i in range(self.get_n())] for j in range(self.get_n())])
-        U = self.A
+        U = np.copy(self.A)
         P = np.matrix([[0.0 for i in range(self.get_n())] for j in range(self.get_n())])  # Identity matrix to store permutations on A's rows
         for i in range(self.get_n()):
             P[i,i] = 1
@@ -56,7 +56,7 @@ class Matrix():
 
             tmp =  np.copy(P[i, :])
             P[i, :] = P[entries_below_pivot_cur_row.index(max_entry) + i, :]
-            P[entries_below_pivot_cur_row.index(max_entry) + i, :] = tmp  # swap i and j rows in all P and U matrices
+            P[entries_below_pivot_cur_row.index(max_entry) + i, :] = tmp  # swap i and j rows in P and U matrices
 
 
             scalar_values = [-U[j,i] / U[i,i] for j in range(i + 1, self.get_n())] # find multiple of row to eliminate first non zero entries below
@@ -79,22 +79,4 @@ class Matrix():
         pass
 
 
-matrix = Matrix([ [7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0] ])
-L1, U1, P1 = matrix.get_PLU()
-P, L, U = spla.lu(np.matrix([ [7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0] ]))
 
-#matrix = Matrix([[1.0, 2.0, 2.0], [2.0, 4.0, 2.0], [1.0, -1.0, 2.0]])
-#L1, U1, P1 = matrix.get_LU()
-#P, L, U = spla.lu(np.matrix([[1.0, 2.0, 2.0], [2.0, 4.0, 2.0],  [1.0, -1.0, 2.0]]))
-
-print(L1)
-print(U1)
-print(P1)
-print(" ")
-print(L)
-print(U)
-print(P)
-print(" ")
-print(L1.dot(U1))
-#print(np.matrix(P1) * np.matrix([ [7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0] ]))
-#print(np.matrix(L) * np.matrix(U))
