@@ -2,11 +2,12 @@ import numpy as np
 import scipy.linalg as spla
 
 
-class Matrix():
+class Matrix:
     def __init__(self, arr):
+        arr = [[float(i) for i in row] for row in arr]
+        self.check_matrix(arr)
         self.A = np.matrix(arr)
-        self.arr = arr
-        pass
+
 
     def get_row_echelon_form(self, A):
         """Returns a row-echelon form of matrix A"""
@@ -119,17 +120,12 @@ class Matrix():
 
     # -------------------- CHECKING MATRIX --------------------------------------------
 
-    def check_matrix(self):
-        if not self.__check_number__():
-            print("Elements in this matrix must be integer or float, but they are not!")
-            return "Wrong matrix"
-        if not self.__check_square__():
-            print("Matrix is not square!")
-            return "Wrong matrix"
-        return True
 
-    def __check_square__(self):
-        A = self.arr
+
+
+    @staticmethod
+    def __check_square__(arr):
+        A = arr
         check_lst = []     # list of lengths of each row
         for row in A:
             check_lst.append(len(row))
@@ -139,8 +135,9 @@ class Matrix():
         else:
             return False
 
-    def __check_number__(self):
-        A = self.arr
+    @staticmethod
+    def __check_number__(arr):
+        A = arr
         for row in A:
             for i in row:
                 if type(i) == float or type(i) == int:
@@ -149,26 +146,12 @@ class Matrix():
                     return False
         return True
 
+    def check_matrix(self, arr):
+        if not self.__check_number__(arr):
+            raise ValueError("Elements in this matrix must be integer or float, but they are not!")
+
+        if not self. __check_square__(arr):
+            raise ValueError("Matrix is not square!")
 
 
-matrix = Matrix([ [7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0] ])
-L1, U1, P1 = matrix.get_PLU()
-P, L, U = spla.lu(np.matrix([ [7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0] ]))
 
-#matrix = Matrix([[1.0, 2.0, 2.0], [2.0, 4.0, 2.0], [1.0, -1.0, 2.0]])
-#L1, U1, P1 = matrix.get_LU()
-#P, L, U = spla.lu(np.matrix([[1.0, 2.0, 2.0], [2.0, 4.0, 2.0],  [1.0, -1.0, 2.0]]))
-
-print(matrix.check_matrix())   # Checking whether matrix is valid
-
-print(L1)
-print(U1)
-print(P1)
-print(" ")
-print(L)
-print(U)
-print(P)
-print(" ")
-print(L1.dot(U1))
-#print(np.matrix(P1) * np.matrix([ [7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0] ]))
-#print(np.matrix(L) * np.matrix(U))
