@@ -1,5 +1,5 @@
 import unittest
-from templates.myFolder import Matrix
+import Matrix
 
 class TestMatrixMethods(unittest.TestCase):
 
