@@ -39,7 +39,7 @@ class Matrix():
     def get_PLU(self):
         L = np.matrix([[0.0 for i in range(self.get_n())] for j in range(self.get_n())])
         U = self.A
-        P = np.matrix([[0.0 for i in range(self.get_n())] for j in range(self.get_n())])  #Identity matrix to store permutations on A's rows
+        P = np.matrix([[0.0 for i in range(self.get_n())] for j in range(self.get_n())])  # Identity matrix to store permutations on A's rows
         for i in range(self.get_n()):
             P[i,i] = 1
 
@@ -49,6 +49,7 @@ class Matrix():
             max_entry = max(entries_below_pivot_cur_row)
             if max_entry == 0:
                 return "Matrix is singular"
+
             tmp =  np.copy(U[i, :])
             U[i, :] = U[entries_below_pivot_cur_row.index(max_entry) + i, :]
             U[entries_below_pivot_cur_row.index(max_entry) + i, :] = tmp
@@ -58,12 +59,13 @@ class Matrix():
             P[entries_below_pivot_cur_row.index(max_entry) + i, :] = tmp  # swap i and j rows in all P and U matrices
 
 
-            scalar_values = [round(-U[j,i] / U[i,i], 4) for j in range(i + 1, self.get_n())] # find multiple of row to eliminate first non zero entries below
+            scalar_values = [-U[j,i] / U[i,i] for j in range(i + 1, self.get_n())] # find multiple of row to eliminate first non zero entries below
             for j in range(i + 1, self.get_n()):
 
-                L[j,i] = round(-scalar_values[j - i -1], 4) # set the correspondent entry of L matrix
+                L[j,i] = -scalar_values[j - i -1] # set the correspondent entry of L matrix
                 for k in range(self.get_n()):
-                    U[j, k] += round(scalar_values[j - i - 1] * U[i, k], 2) # eliminate non-zero entries below pivot entry
+                  U[j, k] += scalar_values[j - i - 1] * U[i, k]  # eliminate non-zero entries below pivot entry
+
 
 
         for i in range(self.get_n()):
@@ -78,7 +80,7 @@ class Matrix():
 
 
 matrix = Matrix([ [7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0] ])
-L1, U1, P1 = matrix.get_LU()
+L1, U1, P1 = matrix.get_PLU()
 P, L, U = spla.lu(np.matrix([ [7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0] ]))
 
 #matrix = Matrix([[1.0, 2.0, 2.0], [2.0, 4.0, 2.0], [1.0, -1.0, 2.0]])
