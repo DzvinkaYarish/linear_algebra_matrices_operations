@@ -28,9 +28,47 @@ class Matrix():
                 break
         return A
 
-    def get_reduced_echelon_form(self):
+    def get_reduced_row_echelon_form(self,A):
+        """ Turns any square matrix into REF -> RREF
+                """
+        for i in range(min(len(A), len(A[0]))):
+            # at the end of for loop, matrix will be in row-echelon form
+            for row in range(i, len(A)):
+                # find the first row with a nonzero entry in first column
+                zero_row = A[row][i] == 0  # this finds a row that begins with 0
+                if zero_row:  # if not found yet...
+                    continue
+                A[i], A[row] = A[row], A[i]  # swaps current row with the first row
+                # make entries below the 1 column 0
+                firstrow_col = A[i][i]
+                for r in range(i + 1, len(A)):
+                    row_first = A[r][i]
+                    scalar_multiple = -1 * row_first / firstrow_col
+                    for c in range(i, len(A[0])):
+                        A[r][c] += A[i][c] * scalar_multiple
+                break
 
-        pass
+                # Now - to RREF
+        for i in range(min(len(A), len(A[0])) - 1, -1, -1):
+            # divide the last non-zero row by the first non-zero entry
+            first_elem_col = -1
+            first_elem = -1
+            for col in range(len(A[0])):
+                if A[i][col] == 0:
+                    continue
+                if first_elem_col == -1:
+                    first_elem_col = col
+                    first_elem = A[i][col]
+                A[i][col] = A[i][col] / first_elem
+            # make all numbers above the main entry(=1) zero
+            for r in range(i):
+                row_above = A[r][first_elem_col]
+                scalar_multiple = -1 * row_above
+                for c in range(len(A[0])):
+                    A[r][c] += (A[i][c] * scalar_multiple)
+
+        print(A)
+        return A
 
     def get_m(self):
         return self.A.shape[0]
