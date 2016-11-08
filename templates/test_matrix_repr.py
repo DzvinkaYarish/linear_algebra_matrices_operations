@@ -20,7 +20,19 @@ class TestMatrixMethods(unittest.TestCase):
     #
     # def test_toString(self):
     #     test_matrix = Matrix()
-
+    def test_get_m(self):
+        test_matrix = Matrix([[7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0] ])
+        self.assertEqual(test_matrix.get_m(), 4)
+        test_matrix1 = Matrix([[1,0,0],[0,1,0],[0,0,1]])
+        self.assertEquals(test_matrix1.get_m(), 3)
+        
+    def test_get_n(self):
+        test_matrix = Matrix(
+            [[7.0, 3.0, -1.0, 2.0], [3.0, 8.0, 1.0, -4.0], [-1.0, 1.0, 4.0, -1.0], [2.0, -4.0, -1.0, 6.0]])
+        self.assertEqual(test_matrix.get_n(), 4)
+        test_matrix1 = Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        self.assertEquals(test_matrix1.get_n(), 3)
+        
 if __name__ == '__main__':
     unittest.main()
 
