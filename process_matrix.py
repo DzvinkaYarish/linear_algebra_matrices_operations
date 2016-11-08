@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import Matrix
+import matrix
 
 process_matrix = Flask(__name__)
 
@@ -22,7 +22,7 @@ def process_template():
     if request.method == "POST":
        arr = str_to_arr(request.form["matrix"])
        try:
-           matrix = Matrix(arr)
+           matrix = matrix(arr)
        except ValueError as err:
            return render_template("/solve_equation.html", message= "Wrong matrix.")
 
