@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.linalg as spla
+from errors import SingularMatrixError
 
 
 class Matrix:
@@ -93,7 +94,7 @@ class Matrix:
             entries_below_pivot_cur_row = [abs(U[j, i]) for j in range(i, self.get_n())]
             max_entry = max(entries_below_pivot_cur_row)
             if max_entry == 0:
-                return "Matrix is singular"
+                raise SingularMatrixError
             tmp =  np.copy(U[i, :])
             U[i, :] = U[entries_below_pivot_cur_row.index(max_entry) + i, :]
             U[entries_below_pivot_cur_row.index(max_entry) + i, :] = tmp
@@ -117,7 +118,7 @@ class Matrix:
         for i in range(self.get_n()):
             det *= U[i,i]
         if not det:
-            return "Matrix is singular!"
+            raise SingularMatrixError()
         return L, U, P
 
     def solve_equation(self, B):

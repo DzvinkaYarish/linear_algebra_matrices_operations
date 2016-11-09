@@ -2,6 +2,7 @@ import unittest
 from matrix import Matrix
 import scipy.linalg as spla
 import numpy as np
+from errors import SingularMatrixError
 
 class TestMatrixMethods(unittest.TestCase):
 
@@ -28,7 +29,7 @@ class TestMatrixMethods(unittest.TestCase):
 
     def test_get_PLU_1(self):
         test_matrix = Matrix([[2, 3, 4], [5, 4, 3], [9, 8, 7]])
-        with self.assertRaises(ValueError):
+        with self.assertRaises(SingularMatrixError):
             L, U, P = test_matrix.get_PLU()
 
 

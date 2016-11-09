@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-import matrix
+from matrix import Matrix
+from errors import  SingularMatrixError
 
 process_matrix = Flask(__name__)
 
@@ -22,11 +23,14 @@ def process_template():
     if request.method == "POST":
        arr = str_to_arr(request.form["matrix"])
        try:
-           matrix = matrix(arr)
+           matrix = Matrix(arr)
        except ValueError as err:
            return render_template("/solve_equation.html", message= "Wrong matrix.")
 
-       solution = matrix.solve_equation()
+       try:
+        solution = matrix.solve_equation()
+       except SingularMatrixError:
+            return render_template("/solve_equation.html", message= "Matrix is singular.")
        return render_template("/solve_equations.html", solution= arr_to_tex_matrix(solution))
     else:
         render_template("/solve_equations.html")
