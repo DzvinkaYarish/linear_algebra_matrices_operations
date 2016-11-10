@@ -11,7 +11,19 @@
     <script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
-
-    <p> {{solution}} </p>
+    <section>
+        <h1> Solving a system of linear equations</h1>
+    </section>
+    <section id="container">
+        <form method="post" action="/solve_equations">
+            <textarea name="matrix">{{matrix}}
+            </textarea>>
+            <input type="submit" />
+        </form>
+    </section>
+    <section>
+        <p> Solution is {{solution}} </p>
+        <p>{{message}}</p>
+    </section>
 </body>
 </html>
