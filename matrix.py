@@ -41,7 +41,7 @@ class Matrix:
 
                         U[cur_row][cc] += U[i][cc] * scalarMultiple
                     E[cur_row] += E[i] * scalarMultiple
-
+        print(E)
         return U, E
 
     def get_reduced_row_echelon_form(self, A):
@@ -74,6 +74,7 @@ class Matrix:
             first_elem = -1
             for col in range(len(U[0])):
                 if U[i][col] == 0:
+                    E[i, col] = E[i, col] / first_elem
                     continue
                 if first_elem_col == -1:
                     first_elem_col = col
@@ -88,7 +89,7 @@ class Matrix:
                     U[r][c] += (U[i][c] * scalar_multiple)
                     E[r, c] += (E[i, c] * scalar_multiple)
 
-
+        print(E)
         return U, E
 
     def get_m(self):
@@ -139,14 +140,15 @@ class Matrix:
     def solve_equation(self, B):
         L, U, P = self.get_PLU()
         PB = P.dot(B)
-        print(L)
+
         a = self.get_reduced_row_echelon_form(L)[1]
-        print( a)
+
         y = a.dot(PB)
-        print(y)
+
         b = self.get_reduced_row_echelon_form(U)[1]
-        print(b)
+        print(y)
         x = b.dot(y)
+
         return x
 
 
@@ -198,6 +200,6 @@ class Matrix:
 m = Matrix([[2,1], [1, -1]])
 print(m.solve_equation([[4],[ -10]]))
 
-print(np.matrix([[0.0, 0.0],[0.0, -0.5]]) * np.matrix([[1.0, 1.0], [0.0, -2]]))
+print(np.matrix([[0.5, 0.3333335],[0.0, -0.66666667]]) * np.matrix([[2.0, 1.0], [0.0, -1.5]]))
 
 
