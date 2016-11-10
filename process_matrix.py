@@ -14,9 +14,9 @@ def str_to_arr(str_mat):
 def arr_to_tex_matrix(arr):
      str_solution = '$\left(\\begin{matrix}\n'
      for entry in arr:
-        print(entry)
-        str_solution += str(entry[0][0]) + "\\\\"
-     str_solution = str_solution[:-2]
+        print(entry[0, 0])
+        str_solution += str(entry[0, 0]) + "\\\\"
+
      str_solution += '\\end{matrix}\\right)$\n'
      print(str_solution)
      return str_solution
