@@ -1,5 +1,5 @@
 import numpy as np
-import scipy.linalg as spla
+#import scipy.linalg as spla
 from errors import SingularMatrixError
 
 
@@ -10,16 +10,27 @@ class Matrix:
         self.A = np.matrix(arr)
 
 
-    def get_row_echelon_form(self):
+    def get_row_echelon_form(self, A):
         """Returns a row-echelon form of matrix A"""
-        U = np.copy(self.A)
+        E = np.matrix([[0.0 for i in range(self.get_n())] for j in range(self.get_n())])
+        for i in range(self.get_n()):
+            E[i,i] = 1.0
+        U = np.copy(A)
         for i in range(min(len(U), len(U[0]))):
             for j in range(i, len(U)):       # for each row
                 zero_row = U[j][i] == 0
                 if zero_row:
                     continue
                 # swap current row with first row
-                U[i], U[j] = U[j], U[i]
+                tmp = np.copy(U[j])
+                U[j] = U[i]
+                U[i] = tmp
+
+                tmp = np.copy(E[j])
+                E[j] = E[i]
+                E[i] = tmp
+
+
                 # reduce the matrix by looking at each column
                 first_row_first_col = U[i][i]
 
@@ -27,11 +38,13 @@ class Matrix:
                     # divide chosen row by a chosen earlier element from first row and multiply by -1
                     scalarMultiple = -1 * U[cur_row][i] / first_row_first_col
                     for cc in range(i, len(U[0])):  # for each element in a first row
-                        U[cur_row][cc] += U[i][cc] * scalarMultiple
-                break
-        return U
 
-    def get_reduced_row_echelon_form(self):
+                        U[cur_row][cc] += U[i][cc] * scalarMultiple
+                    E[cur_row] += E[i] * scalarMultiple
+
+        return U, E
+
+    def get_reduced_row_echelon_form(self, A):
         """ Turns any square matrix into REF -> RREF
                 """
         # for i in range(min(len(A), len(A[0]))):
@@ -53,7 +66,7 @@ class Matrix:
 
 
                 # Now - to RREF
-        U = self.get_row_echelon_form()
+        U, E = self.get_row_echelon_form(A)
 
         for i in range(min(len(U), len(U[0])) - 1, -1, -1):
             # divide the last non-zero row by the first non-zero entry
@@ -66,15 +79,17 @@ class Matrix:
                     first_elem_col = col
                     first_elem = U[i][col]
                 U[i][col] = U[i][col] / first_elem
+                E[i, col] = E[i, col] / first_elem
             # make all numbers above the main entry(=1) zero
             for r in range(i):
                 row_above = U[r][first_elem_col]
                 scalar_multiple = -1 * row_above
                 for c in range(len(U[0])):
                     U[r][c] += (U[i][c] * scalar_multiple)
+                    E[r, c] += (E[i, c] * scalar_multiple)
 
-        print(U)
-        return U
+
+        return U, E
 
     def get_m(self):
         return self.A.shape[0]
@@ -122,7 +137,21 @@ class Matrix:
         return L, U, P
 
     def solve_equation(self, B):
-        pass
+        L, U, P = self.get_PLU()
+        PB = P.dot(B)
+        print(L)
+        a = self.get_reduced_row_echelon_form(L)[1]
+        print( a)
+        y = a.dot(PB)
+        print(y)
+        b = self.get_reduced_row_echelon_form(U)[1]
+        print(b)
+        x = b.dot(y)
+        return x
+
+
+
+
 
     def to_string(self):
         pass
@@ -166,6 +195,9 @@ class Matrix:
 
 
 
+m = Matrix([[2,1], [1, -1]])
+print(m.solve_equation([[4],[ -10]]))
 
+print(np.matrix([[0.0, 0.0],[0.0, -0.5]]) * np.matrix([[1.0, 1.0], [0.0, -2]]))
 
 
