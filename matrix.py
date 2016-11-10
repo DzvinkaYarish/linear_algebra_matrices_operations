@@ -68,8 +68,9 @@ class Matrix:
                 # Now - to RREF
         U, E = self.get_row_echelon_form(A)
         count = 0
-        if all([all([j == 0 for j in i]) for i in A]):
-            raise SingularMatrixError
+        #if all([all([j == 0 for j in i]) for i in A]):
+
+
 
         for i in range(min(len(U), len(U[0])) - 1, -1, -1):
             # divide the last non-zero row by the first non-zero entry
@@ -189,6 +190,12 @@ class Matrix:
                 else:
                     return False
         return True
+    @staticmethod
+    def __check_all_zeros__(arr):
+        return not np.any(arr)
+
+
+
 
     def check_matrix(self, arr):
         if not self.__check_number__(arr):
@@ -196,6 +203,8 @@ class Matrix:
 
         if not self. __check_square__(arr):
             raise ValueError("Matrix is not square!")
+        if self.__check_all_zeros__(arr):
+            raise SingularMatrixError()
 
 
 
