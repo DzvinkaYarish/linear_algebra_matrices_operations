@@ -1,0 +1,36 @@
+                        Solving Ax = b with LU-factorization
+                        
+        Suppose that we have a system of linear equations Ax = b, where A is n x n matrix. 
+To solve this system, we will use LU-factorization. 
+
+        What is LU-factorization?   
+Suppose that we can write
+                                      A = LU
+where L is a lower triangular matrix and U is an upper triangular matrix. 
+Our aim is to find L and U and once we have done so we have found an LU decomposition of A.
+But this method has a few problems. One of them is that our matrix A might be singular and 
+in this case, during calculation of row echelon form we may get 0 as a pivot.
+This will lately result in division by zero when we will search U matrix. 
+
+        To solve a system of linear equations Ax = b and avoid this problem we used a modified
+LU-factorization method. We found a decomposition 
+                                      A = PLU
+where P is a permutation matrix, L is a lower-triangular matrix, and U is an upper-triangular
+matrix. Now, it is possible to solve a system of equation. As PLUx = b, we can define y which
+equals to Ux. So, Ly = PB, Ux = y. Thus, we can find x. 
+
+
+Our pseudocode: 
+
+For i = 1, 2, ..., n - 1 do:
+        Find the row j with the largest entry in absolute value on or below the diagonal of the 
+        ith row and swap rows i and j in all three matrices, PT, L, and U. If this maximum entry
+        is zero, terminate this loop and indicate that the matrix is singular, that is, 
+        non-invertible.
+        
+        For j = i + 1, ..., n, calculate the scalar value s = -uj,i / ui,i.    
+        
+        Add s times row i onto row j in the matrix U and set the entry lj,i = -s.
+        
+Having iterated from i = 1, 2, ..., n, finish by adding the identity matrix onto L = L + In. 
+These are the PT, L, and U matrices of the PLU decomposition of A.
