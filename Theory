@@ -16,7 +16,7 @@ This will lately result in division by zero when we will search U matrix.
 LU-factorization method. We found a decomposition 
                                       A = PLU
 where P is a permutation matrix, L is a lower-triangular matrix, and U is an upper-triangular
-matrix. Now, it is possible to solve a system of equation. As PLUx = b, we can define y which
+matrix. Now, it is possible to solve a system of equationі. As LUx = Pb, we can define y which
 equals to Ux. So, Ly = PB, Ux = y. Thus, we can find x. 
         In the process of searching U and L matrices we used Gaussian Elimination. However, we
 didn't write just a reduce_row_echelon_form function, we also wrote row_echelon_form because 
