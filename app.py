@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 import random
 from matrix import Matrix
+from errors import SingularMatrixError
+import numpy as np
 
 app = Flask(__name__)
 
@@ -22,12 +24,20 @@ def get_index():
             print(matrix)
             print(b)
             new_matrix = Matrix(to_list(matrix))
-            b = [float(i) for i in b.split("\n")]
-            return render_template('solve_equations.html', matrix=matrix, solution=to_string(new_matrix.solve_equation(b)))
+            b = np.matrix([[float(i)] for i in b.split("\n")])
+            solution = new_matrix.solve_equation(b)
+            print(solution)
+            return render_template('solve_equations.html', matrix=matrix, solution=to_string(solution))
         else:
             return render_template('solve_equations.html')
-    except:
-        return render_template('solve_equations.html', error_message="Impossible to find matrix inversion.")
+    except ValueError:
+        return render_template('solve_equations.html', error_message="Wrong format.")
+    except SingularMatrixError:
+         return render_template('solve_equations.html', error_message="Not singular.")
+    except IndexError:
+        return render_template('solve_equations.html', error_message="Not square.")
+
+
 
 
 if __name__ == "__main__":

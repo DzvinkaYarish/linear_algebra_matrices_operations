@@ -1,5 +1,4 @@
 import numpy as np
-#import scipy.linalg as spla
 from errors import SingularMatrixError
 
 
@@ -44,7 +43,7 @@ class Matrix:
 
         return U, E
 
-    def get_reduced_row_echelon_form(self, A):
+    def get_reduced_row_echelon_form(self, A,alreadyrow=False):
         """ Turns any square matrix into REF -> RREF
                 """
         # for i in range(min(len(A), len(A[0]))):
@@ -66,7 +65,13 @@ class Matrix:
 
 
                 # Now - to RREF
-        U, E = self.get_row_echelon_form(A)
+        if not alreadyrow:
+            U, E = self.get_row_echelon_form(A)
+        else:
+            U = np.copy(A)
+            E = np.matrix([[0.0 for i in range(self.get_n())] for j in range(self.get_n())])
+        for i in range(self.get_n()):
+            E[i,i] = 1.0
         count = 0
         #if all([all([j == 0 for j in i]) for i in A]):
 
@@ -150,24 +155,15 @@ class Matrix:
 
         y = a.dot(PB)
 
-        b = self.get_reduced_row_echelon_form(U)[1]
+        b = self.get_reduced_row_echelon_form(U, alreadyrow=True)[1]
 
         x = b.dot(y)
 
         return x
-
-
-
-
-
     def to_string(self):
         pass
 
     # -------------------- CHECKING MATRIX --------------------------------------------
-
-
-
-
     @staticmethod
     def __check_square__(arr):
         A = arr
@@ -190,19 +186,17 @@ class Matrix:
                 else:
                     return False
         return True
+
     @staticmethod
     def __check_all_zeros__(arr):
         return not np.any(arr)
-
-
-
 
     def check_matrix(self, arr):
         if not self.__check_number__(arr):
             raise ValueError("Elements in this matrix must be integer or float, but they are not!")
 
         if not self. __check_square__(arr):
-            raise ValueError("Matrix is not square!")
+            raise IndexError("Matrix is not square!")
         if self.__check_all_zeros__(arr):
             raise SingularMatrixError()
 
