@@ -37,3 +37,14 @@ For i = 1, 2, ..., n - 1 do:
         
 Having iterated from i = 1, 2, ..., n, finish by adding the identity matrix onto L = L + In. 
 These are the PT, L, and U matrices of the PLU decomposition of A.
+
+
+      Important thing is, that the computational cost of computing a solution x of an equation Ax = b via 
+Gaussian elimination or LU is the same. IF we have to solve Ax = b exactly once then Gaussian elimination 
+with partial pivoting (row interchanges) on the augmented matrix [A | b], followed by backward substitution 
+to find x, is a good method to choose. 
+However, LU-factorization is a record of Gaussian elimination on just the matrix of coefficients, A. If we have to 
+solve Ax = b1, Ax=b2, ... where A is constant, then it is much more efficient to use LU. We only have to 
+do the Gaussian elimination (cost ~ n^3) once. By the way, all the entries in L are "multipliers" we have
+already calculated during elimination. 
+
