@@ -18,8 +18,12 @@ def get_index():
     try:
         if request.method == "POST":
             matrix = request.form['matrix']
+            b = request.form['vB']
+            print(matrix)
+            print(b)
             new_matrix = Matrix(to_list(matrix))
-            return render_template('solve_equations.html', matrix=matrix, solution=to_string(new_matrix.solve_equation()))
+            b = [float(i) for i in b.split("\n")]
+            return render_template('solve_equations.html', matrix=matrix, solution=to_string(new_matrix.solve_equation(b)))
         else:
             return render_template('solve_equations.html')
     except:
