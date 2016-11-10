@@ -11,27 +11,34 @@
     </script>
     <script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
-<body style="background-color: rgba(215, 252, 204, 0.32);">
-<h1 style=" background-color: #017c57; border-radius: 10px; text-align: center;"> We make calculations easier </h1>
-    <div id="for_form" >
 
-    <form id='matrix'method="post" action="/" style="background-image: http://www.yashanet.com/image/matrix/wormhole.jpg">
-        <div style="margin-left: 5%; padding-top:10%;">
+<body style="background-color: rgba(215, 252, 204, 0.32);"> <div id="container">
+<h1 style="color: white; background-color: #017c57; border-radius: 10px; text-align: center;"> We make calculations easier </h1>
+    <div id="for_form" style="border-radius: 10px; padding-top:10%; background-color: rgba(215, 252, 204, 0.32); " >
+    <div id="for_matrix" style="width: 40%;background-color: #6fdb99; border-radius: 10px;">
+    <form id='matrix' method="post" action="/" style="border-radius: 10px;"  >
+        <div style="margin-left: 5%; ">
             <label for='matrix'> <h2>Type your matrix in here:</h2> <p><i>(Please use digits only)</i></p> </label> <br/>
 
-            <textarea name="matrix" rows="6" style="width: 150px; height: 150px; font-size: 16px; border-radius: 10px;"> </textarea><br>
-            <input type="submit" value="Let's calculate">
+            <textarea name="matrix" rows="6" style="width: 150px; height: 150px; font-size: 16px; border-radius: 10px; "></textarea>
         </div>
+            <br>
+            <form id="for_B"> <label for="for_B" ><h3>Type the B vector in here: </h3></label><br>
+                 <textarea name="vB" rows="6" style="width: 50px; height: 150px; font-size: 16px; margin-left: 65px; border-radius: 10px;" ></textarea></form>
+                <br>
+            <input type="submit" value="Let's calculate">
+        </form></div>
+
     </form>
 
-    <form id="for_B"><label for="for_B" >Type the B vector in here: </label><br>
-    <textarea name="vB" rows="6" style="width: 50px; height: 150px; font-size: 16px; border-radius: 10px;"></textarea></form>
+
 
 
 
     </div>
     <p> {{solution}} </p>
 
+</div>
 </body>
 
 </html>
