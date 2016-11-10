@@ -67,6 +67,9 @@ class Matrix:
 
                 # Now - to RREF
         U, E = self.get_row_echelon_form(A)
+        count = 0
+        if all([all([j == 0 for j in i]) for i in A]):
+            raise SingularMatrixError
 
         for i in range(min(len(U), len(U[0])) - 1, -1, -1):
             # divide the last non-zero row by the first non-zero entry
@@ -88,6 +91,7 @@ class Matrix:
                 for c in range(len(U[0])):
                     U[r][c] += (U[i][c] * scalar_multiple)
                     E[r, c] += (E[i, c] * scalar_multiple)
+
 
 
         return U, E
