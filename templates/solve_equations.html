@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='shortcuticon.jpg') }}">
     <title>Linear Algebra Project</title>
      <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
@@ -10,8 +11,27 @@
     </script>
     <script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
-<body>
+<body style="background-color: rgba(215, 252, 204, 0.32);">
+<h1 style=" background-color: #017c57; border-radius: 10px; text-align: center;"> We make calculations easier </h1>
+    <div id="for_form" >
 
+    <form id='matrix'method="post" action="/" style="background-image: http://www.yashanet.com/image/matrix/wormhole.jpg">
+        <div style="margin-left: 5%; padding-top:10%;">
+            <label for='matrix'> <h2>Type your matrix in here:</h2> <p><i>(Please use digits only)</i></p> </label> <br/>
+
+            <textarea name="matrix" rows="6" style="width: 150px; height: 150px; font-size: 16px; border-radius: 10px;"> </textarea><br>
+            <input type="submit" value="Let's calculate">
+        </div>
+    </form>
+
+    <form id="for_B"><label for="for_B" >Type the B vector in here: </label><br>
+    <textarea name="vB" rows="6" style="width: 50px; height: 150px; font-size: 16px; border-radius: 10px;"></textarea></form>
+
+
+
+    </div>
     <p> {{solution}} </p>
+
 </body>
+
 </html>
