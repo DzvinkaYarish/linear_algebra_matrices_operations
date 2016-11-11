@@ -35,6 +35,7 @@ def process_template():
            #RHS = [[i] for i in arr[:, -1]]
            matrix = Matrix(matrix)
            B = str_to_arr(B)
+           assert(B.shape[1]== 1)
            print(matrix)
 
 
@@ -42,6 +43,9 @@ def process_template():
            return render_template("solve_equations.html", message= "Wrong matrix format.")
        except SingularMatrixError:
            return render_template("solve_equations.html", message= "Matrix couldn't contain all zeros.")
+       except AssertionError:
+            return render_template("solve_equations.html", message= "Wrong vector format.")
+
 
 
        try:

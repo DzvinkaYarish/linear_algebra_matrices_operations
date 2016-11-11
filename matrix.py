@@ -151,13 +151,13 @@ class Matrix:
         L, U, P = self.get_PLU()
         PB = P.dot(B)
 
-        a = self.get_reduced_row_echelon_form(L)[1]
+        E1 = self.get_reduced_row_echelon_form(L)[1]
 
-        y = a.dot(PB)
+        y = E1.dot(PB)
 
-        b = self.get_reduced_row_echelon_form(U, alreadyrow=True)[1]
+        E2 = self.get_reduced_row_echelon_form(U, alreadyrow=True)[1]
 
-        x = b.dot(y)
+        x = E2.dot(y)
 
         return x
     def to_string(self):
@@ -196,7 +196,7 @@ class Matrix:
             raise ValueError("Elements in this matrix must be integer or float, but they are not!")
 
         if not self. __check_square__(arr):
-            raise IndexError("Matrix is not square!")
+            raise ValueError("Matrix is not square!")
         if self.__check_all_zeros__(arr):
             raise SingularMatrixError()
 
